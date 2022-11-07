@@ -11,5 +11,11 @@ class PetController{
         {
             $this->Dao = new PetDAO();
         }
+    
+    public function Add(){
+
+    }
+    public function Update(){}
+    public function Delete(){}
 }
 ?>

@@ -11,5 +11,19 @@ class KeeperController{
         {
             $this->Dao = new KeeperDAO();
         }
+    
+    public function AddEmpty(){
+
+        $keeper = new Keeper();
+        $lastId = $this->Dao->Add($keeper);
+
+        return $lastId;
+    }
+
+    // filtrar por type de pet
+    public function ShowList(){}
+
+    // filtrar por fecha
+    public function ShowListByDate(){}
 }
 ?>

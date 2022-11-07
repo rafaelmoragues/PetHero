@@ -20,7 +20,9 @@
             
             $this->connection = Connection::GetInstance();
 
-            $this->connection->ExecuteNonQuery($query, $parameters);
+            $lastId = $this->connection->ExecuteNonQuery($query, $parameters,true);
+
+            return $lastId;
         }
 
         public function GetAll(){

@@ -25,7 +25,9 @@ use Models\Owner;
 
             $this->connection = Connection::GetInstance();
 
-            $this->connection->ExecuteNonQuery($query, $parameters,false);
+            $lastId = $this->connection->ExecuteNonQuery($query, $parameters,true);
+
+            return $lastId;
         }
 
         public function GetByIdKeeper($id){

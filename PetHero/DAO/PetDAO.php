@@ -11,8 +11,26 @@
         private $connection;
         private $tableName = "pet";
 
-        public function Add(Pet $Pet){
+        public function Add(Pet $pet){
 
+            $query = "INSERT INTO ".$this->tableName." ( active, img, birthDate, race, size, vacPlan,video,observation) 
+            VALUES (:active, :img, :birthDate, :race, :size, :vacPlan, :video, :observation);";
+
+            $parameters["active"]=$pet->GetActive();
+            $parameters["img"]=$pet->GetImg();
+            $parameters["birthDate"]=$pet->GetBirthDate();
+            $parameters["race"]=$pet->GetRace();
+            $parameters["size"]=$pet->GetSize();
+            $parameters["vacPlan"]=$pet->GetVacPlan();
+            $parameters["video"]=$pet->GetVideo();
+            $parameters["observation"]=$pet->GetObservation();
+            $parameters["petType"]=$pet->GetType();
+            
+            $this->connection = Connection::GetInstance();
+
+            $lastId = $this->connection->ExecuteNonQuery($query, $parameters,true);
+
+            return $lastId;
             $PetList = array();
 
             $query = "SELECT * FROM ".$this->tableName;

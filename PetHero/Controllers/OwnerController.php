@@ -3,6 +3,7 @@ namespace Controllers;
 
 use DAO\OwnerDAO;
 use Models\Owner;
+use Models\Pet;
 
 class OwnerController{
     private $Dao;
@@ -17,6 +18,15 @@ class OwnerController{
         require_once(VIEWS_PATH."student-add.php");
     }
     
+    public function AddEmpty(){
+        $owner = new Owner();
+        $pet = new Pet();
+        $owner->SetPet($pet);
+
+        $lastId = $this->Dao->Add($owner);
+
+        return $lastId;
+    }
     public function Add($Name, $LastName, $Address, $City, $Genre,$Dni,$Email,$Phone,$UserName,$Password)
     {
         $Owner = new Owner();
