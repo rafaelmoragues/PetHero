@@ -31,30 +31,7 @@
             $lastId = $this->connection->ExecuteNonQuery($query, $parameters,true);
 
             return $lastId;
-            $PetList = array();
-
-            $query = "SELECT * FROM ".$this->tableName;
-
-            $resultSet = $this->connection->Execute($query);
-
-            foreach ($resultSet as $row)
-                {                
-                    $pet = new Pet();
-                    $pet->SetId($row["id"]);
-                    $pet->SetActive($row["active"]);
-                    $pet->SetImg($row["img"]);
-                    $pet->SetBirthDate($row["birthDate"]);
-                    $pet->SetRace([$row["race"]]);
-                    $pet->SetSize(["size"]);
-                    $pet->SetVacPlan(["vacPlan"]);
-                    $pet->SetVideo(["video"]);
-                    $pet->SetObservation(["observation"]);
-                    // setear tipo, hacer modelo Type
-
-                    array_push($petList, $pet);
-                }
-
-                return $petList;
+            
         }
 
         public function GetAll(){
@@ -103,6 +80,34 @@
                     // setear tipo, hacer modelo Type
 
                     return $pet;
+        }
+
+        public function GetByOwnerId($oId){
+
+            $petList = array();
+            $query = "SELECT * FROM".$this->tableName."WHERE ownerId = :id";
+
+            $parameters["id"] = $oId;
+            $resultSet = $this->connection->Execute($query, $parameters);
+
+            foreach ($resultSet as $row)
+                {                
+                    $pet = new Pet();
+                    $pet->SetId($row["petId"]);
+                    $pet->SetActive($row["active"]);
+                    $pet->SetImg($row["img"]);
+                    $pet->SetBirthDate($row["birthDate"]);
+                    $pet->SetRace([$row["race"]]);
+                    $pet->SetSize(["size"]);
+                    $pet->SetVacPlan(["vacPlan"]);
+                    $pet->SetVideo(["video"]);
+                    $pet->SetObservation(["observation"]);
+                    // setear tipo, hacer modelo Type
+
+                    array_push($petList, $pet);
+                }
+
+                return $petList;
         }
         public function Delete($id){
             $query = "UPDATE ".$this->tableName." SET active = 0 WHERE id = :id";

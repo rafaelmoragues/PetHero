@@ -4,57 +4,62 @@ namespace Models;
 //use Models\Type;
 
 class Pet{
-    private $intId;
-    private $strImg;
-    //private Type $strType;
-    private $strRace;
-    private $strSize;
-    private $imgVacPlan;
-    private $strObservation;
-    private $strVideo;
-    private $strBirthDate;
-    private $bitActive;
+    private $Id;
+    private $ownerId;
+    private $Img;
+    //private Type $Type;
+    private $Race;
+    private $Size;
+    private $VacPlan;
+    private $Observation;
+    private $Video;
+    private $BirthDate;
+    private $Active;
 
     public function SetId($id){
-        $this->intId = $id;
+        $this->Id = $id;
+    }
+    public function SetOwnerId($id){
+        $this->ownerId = $id;
     }
     public function SetImg($img){
-        $this->strImg = $img;
+        $this->Img = $img;
     }
     public function SetRace($race){
-        $this->strRace = $race;
+        $this->Race = $race;
     }
     public function SetSize($size){
-        $this->strSize = $size;
+        $this->Size = $size;
     }
     public function SetVacPlan($vac){
-        $this->imgVacPlan = $vac;
+        $this->VacPlan = $vac;
     }
     public function SetObservation($ob){
-        $this->strObservation = $ob;
+        $this->Observation = $ob;
     }
     public function SetVideo($video){
-        $this->strVideo = $video;
+        $this->Video = $video;
     }
     public function SetBirthDate($date){
-        $this->strBirthDate = $date;
+        $this->BirthDate = $date;
     }
 
     public function SetActive($active){
-        $this->bitActive = $active;
+        $this->Active = $active;
     }
     // public function SetType(Type $type){
     //     $this->strType = $type;
     // }
-    public function GetId(){return $this->strId;}
-    public function GetImg(){return $this->strImg;}
-    public function GetRace(){return $this->strRace;}
-    public function GetSize(){return $this->strSize;}
-    public function GetVacPlan(){return $this->imgVacPlan;}
-    public function GetObservation(){return $this->strObservation;}
-    public function GetVideo(){return $this->strVideo;}
-    public function GetBirthDate(){return $this->strBirthDate;}
-    public function GetActive(){return $this->bitActive;}
+    public function GetId(){return $this->Id;}
+    public function GetOwnerId(){return $this->ownerId;}
+    public function GetImg(){return $this->Img;}
+    public function GetRace(){return $this->Race;}
+    public function GetSize(){return $this->Size;}
+    public function GetVacPlan(){return $this->VacPlan;}
+    public function GetObservation(){return $this->Observation;}
+    public function GetVideo(){return $this->Video;}
+    public function GetBirthDate(){return $this->BirthDate;}
+    public function GetActive(){return $this->Active;}
     public function GetType(){return $this->type;}
 }
 ?>
