@@ -3,6 +3,7 @@ namespace Controllers;
 
 use DAO\UserDAO;
 use Models\User;
+use Exception;
 
 class UserController{
 private $Dao;
@@ -14,10 +15,12 @@ public function __construct()
 
 public function ShowAddView()
 {
-    require_once(VIEWS_PATH."student-add.php");
+    require_once(VIEWS_PATH."user-add.php");
 }
-public function Add($Name, $LastName, $Address, $City, $Genre,$Dni,$Email,$Phone,$UserName,$Password, $userType)
+public function Add($Name, $LastName, $Address, $City, $Genre,$Dni,$Email,$Phone,$UserName,$Password)
     {
+        try{
+            // seteo user
         $user = new User();
         $user->SetName($Name);
         $user->SetLastName($LastName);
@@ -29,31 +32,85 @@ public function Add($Name, $LastName, $Address, $City, $Genre,$Dni,$Email,$Phone
         $user->SetPhone($Phone);
         $user->SetUserName($UserName);
         $user->SetPassWord($Password);
+        $user->SetActive(true);
 
-        if($userType == "owner"){
-            $ownerController = new OwnerController();
-            $ownerId = $ownerController->AddEmpty();
-
-            $user->SetIdOwner($ownerId);
-        }
-        else{
-            $keeperController = new KeeperController();
-            $keeperId = $keeperController->AddEmpty();
-
-            $user->SetIdKeeper($keeperId);
-
-        }
-
+        
+            // guardo user en BD
         $lastId = $this->Dao->Add($user);
 
-        $_SESSION["UserId"] = $lastId;
-        $_SESSION["OwnerId"] = $user->GetIdOwner();
-        $_SESSION["KeeperId"] = $user->GetIdKeeper();
-
-        //mostrar alguna vista
+        $homeController = new HomeController();
+        // logeo el usuario que se registro
+        $homeController->Login($UserName, $Password);
+        }
+        catch(Exception $e){
+            $_SESSION["message"] = "Ops! A ocurrido un error.";
+            require_once(VIEWS_PATH."index.php");
+        }
     }
 
+    public function ShowIndexView(){
+        require_once(VIEWS_PATH."index.php");
+    }
     public function UpdatePassword(){}
     
+    public function ValidateUser($userName, $pass){
+
+        try{
+            // Valido login con datos de la base
+        $response = $this->Dao->ValidateUser($userName, $pass);
+
+        if($response != null){
+            return $response;
+        }
+    }
+    catch(Exception $e){
+        $_SESSION["message"] = "Ops! A ocurrido un error.";
+        require_once(VIEWS_PATH."index.php");
+    }
+    }
+
+    public function SetKeeperOwnerId(){
+        try{
+            // traigo user por id
+        $user = $this->Dao->GetById(intval($_SESSION["idUser"]));
+
+        // seteo en user el idOwner si no tiene
+        if(isset($_SESSION["idOwner"]) && is_null($user->GetIdOwner())){
+            $user->SetIdOwner(intval($_SESSION["idOwner"]));
+        }
+        //seteo en user el idkeeper si no tiene
+        if(isset($_SESSION["idKeeper"]) && is_null($user->GetIdKeeper())){
+            $user->SetIdKeeper(intval($_SESSION["idKeeper"]));
+        }
+        // actualizo owner
+        $this->Dao->Update($user);
+        $_SESSION["message"]= "Actualizado correctamente";
+        $this->ShowIndexView();
+    }
+    catch(Exception $e){
+        $_SESSION["message"] = "Ops! A ocurrido un error.";
+        require_once(VIEWS_PATH."index.php");
+    }
+    }
+
+    public function GetByKeeperid($id){
+        try{
+            // traigo user por idkeeper
+        $user = $this->Dao->GetByKeeperId($id);
+
+        return $user;
+        }
+        catch(Exception $e){
+            $_SESSION["message"] = "Ops! A ocurrido un error.";
+            require_once(VIEWS_PATH."index.php");
+        }
+    }
+
+    public function GetByOwnerId($id){
+        // traigo user por idOwner
+        $user = $this->Dao->GetByOwnerId($id);
+
+        return $user;
+    }
 }
 ?>

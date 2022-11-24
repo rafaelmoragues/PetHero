@@ -25,7 +25,7 @@ use Models\Owner;
 
             $this->connection = Connection::GetInstance();
 
-            $lastId = $this->connection->ExecuteNonQuery($query, $parameters,true);
+            $lastId = $this->connection->ExecuteNonQuery($query, $parameters,true,false);
 
             return $lastId;
         }

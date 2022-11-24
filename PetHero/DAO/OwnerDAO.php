@@ -13,14 +13,14 @@
         private $tableName = "owner";
 
         public function Add(Owner $owner){
-            $query = "INSERT INTO ".$this->tableName." (petId ) 
-            VALUES (:petId);";
+            $query = "INSERT INTO ".$this->tableName." (idPet ) 
+            VALUES (:idPet)";
 
-            $parameters["petId"]=$owner->GetPet()->GetId();
+            $parameters["idPet"]=$owner->GetPet()->GetId();
             
             $this->connection = Connection::GetInstance();
 
-            $lastId = $this->connection->ExecuteNonQuery($query, $parameters,true);
+            $lastId = $this->connection->ExecuteNonQuery($query, $parameters,true,false);
 
             return $lastId;
         }
@@ -30,6 +30,7 @@
 
             $query = "SELECT * FROM ".$this->tableName;
 
+            $this->connection = Connection::GetInstance();
             $resultSet = $this->connection->Execute($query);
 
             foreach ($resultSet as $row)
@@ -50,6 +51,7 @@
             $query = "SELECT * FROM".$this->tableName."WHERE ID = :id";
 
             $parameters["id"] = $id;
+            $this->connection = Connection::GetInstance();
             $row = $this->connection->Execute($query, $parameters);
 
             $pet = new Pet();
@@ -70,6 +72,7 @@
             $parameters["petId"]=$owner->GetPet()->GetId();
             $parameters["id"]=$oldOwner->GetId();
 
+            $this->connection = Connection::GetInstance();
             $response = $this->connection->ExecuteNonQuery($query, $parameters, false);
         }
     }

@@ -41,7 +41,6 @@
                 $this->BindParameters($parameters, $queryType);
                 
                 $this->pdoStatement->execute();
-
                 return $this->pdoStatement->fetchAll();
             }
             catch(Exception $ex)
@@ -50,17 +49,20 @@
             }
         }
         
-        public function ExecuteNonQuery($query, $parameters = array(), $queryType = QueryType::Query)
+        public function ExecuteNonQuery($query, $parameters = array(), $returnLastId = false, $queryType = QueryType::Query)
 	    {            
             try
             {
                 $this->Prepare($query);
                 
                 $this->BindParameters($parameters, $queryType);
-
                 $this->pdoStatement->execute();
 
-                return $this->pdoStatement->rowCount();
+                if($returnLastId){
+                    return $this->pdo->lastInsertId();
+                }else{
+                    return $this->pdoStatement->rowCount();
+                }
             }
             catch(Exception $ex)
             {

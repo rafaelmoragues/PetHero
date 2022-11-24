@@ -2,37 +2,52 @@
 namespace Models;
 
 class Booking {
-    private $intIdOwner;
-    private $intIdKeeper;
-    private $doubleAmount;
-    private $strStartDate;
-    private $strEndDate;
-    private $intIdPet;
+    private $Id;
+    private $IdOwner;
+    private $IdKeeper;
+    private $Amount;
+    private $StartDate;
+    private $EndDate;
+    private $IdPet;
+    private $Confirmed;
 
+    public function SetId($id){
+        $this->Id = $id;
+    }
     public function SetOwner ($idOwner){
-        $this->intIdOwner = $idOwner;
+        $this->IdOwner = $idOwner;
     }
     public function SetKeeper($idKeeper){
-        $this->intIdKeeper = $idKeeper;
+        $this->IdKeeper = $idKeeper;
     }
     public function SetAmount ($amount){
-        $this->doubleamount = $amount;
+        $this->Amount = $amount;
     }
 
     public function SetStartDate ($startDate){
-        $this->strStartDate = $startDate;
+        $this->StartDate = $startDate;
     }
 
     public function SetEndDate ($endDate){
-        $this->strEndDate = $endDate;
+        $this->EndDate = $endDate;
     }
 
     public function SetIdPet ($idPet){
-        $this->intIdPet = $idPet;
+        $this->IdPet = $idPet;
     }
-    public function GetPetSize (){return $this->strPetSize;}
-    public function GetPrice(){return $this->longPrice;}
-    public function GetReputation(){return $this->doubleReputation;}
+
+    public function SetConfirmed($confirmed){
+        $this->Confirmed = $confirmed;
+    }
+    public function GetId(){return $this->Id;}
+    public function GetIdOwner(){return $this->IdOwner;}
+    public function GetIdKeeper(){return $this->IdKeeper;}
+    public function GetPetSize (){return $this->PetSize;}
+    public function GetAmount(){return $this->Amount;}
+    public function GetStartDate(){return $this->StartDate;}
+    public function GetEndDate(){return $this->EndDate;}
+    public function GetIdPet(){return $this->IdPet;}
+    public function GetConfirmed(){return $this->Confirmed;}
 
 }
 ?>

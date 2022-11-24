@@ -5,9 +5,9 @@ namespace Models;
 
 class Pet{
     private $Id;
-    private $ownerId;
+    private $OwnerId;
     private $Img;
-    //private Type $Type;
+    private $Type;
     private $Race;
     private $Size;
     private $VacPlan;
@@ -20,7 +20,7 @@ class Pet{
         $this->Id = $id;
     }
     public function SetOwnerId($id){
-        $this->ownerId = $id;
+        $this->OwnerId = $id;
     }
     public function SetImg($img){
         $this->Img = $img;
@@ -47,11 +47,11 @@ class Pet{
     public function SetActive($active){
         $this->Active = $active;
     }
-    // public function SetType(Type $type){
-    //     $this->strType = $type;
-    // }
+    public function SetType(PetType $type){
+        $this->Type = $type;
+    }
     public function GetId(){return $this->Id;}
-    public function GetOwnerId(){return $this->ownerId;}
+    public function GetOwnerId(){return $this->OwnerId;}
     public function GetImg(){return $this->Img;}
     public function GetRace(){return $this->Race;}
     public function GetSize(){return $this->Size;}
@@ -60,6 +60,6 @@ class Pet{
     public function GetVideo(){return $this->Video;}
     public function GetBirthDate(){return $this->BirthDate;}
     public function GetActive(){return $this->Active;}
-    public function GetType(){return $this->type;}
+    public function GetType(){return $this->Type;}
 }
 ?>

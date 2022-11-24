@@ -30,17 +30,28 @@ class KeeperService{
         return $response;
     }
 
-    public function GetKeeperByType($typeId){
-
-        // Traigo todos los keepers
-        $keeperList = $this->Dao->GetAll();
+    public function GetKeeperByType($typeId, $list){
 
         // arreglo de respuesta vacio
         $response = array();
 
         // recorro los keepers y busco por tipo
-        foreach($keeperList as $keeper){
+        foreach($list as $keeper){
             if($keeper->GetPetType() == $typeId){
+                array_push($response, $keeper);
+            }
+        }
+        
+        return $response;
+    }
+
+    public function GetKeeperBySize($size, $list){
+        // arreglo de respuesta vacio
+        $response = array();
+
+        // recorro los keepers y busco por tipo
+        foreach($list as $keeper){
+            if($keeper->GetPetSize() == $size){
                 array_push($response, $keeper);
             }
         }

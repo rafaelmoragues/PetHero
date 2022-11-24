@@ -5,6 +5,7 @@
     use DAO\IPetDAO;
     use Models\Pet as Pet;    
     use DAO\Connection as Connection;
+use Models\PetType;
 
     class PetDAO implements IPetDAO
     {
@@ -13,22 +14,22 @@
 
         public function Add(Pet $pet){
 
-            $query = "INSERT INTO ".$this->tableName." ( active, img, birthDate, race, size, vacPlan,video,observation) 
-            VALUES (:active, :img, :birthDate, :race, :size, :vacPlan, :video, :observation);";
+            $query = "INSERT INTO ".$this->tableName." ( active, idOwner, img, birthDate, race, idType, size, vacPlan, observation) 
+            VALUES (:active, :idOwner, :img, :birthDate, :race, :idType, :size, :vacPlan, :observation);";
 
             $parameters["active"]=$pet->GetActive();
             $parameters["img"]=$pet->GetImg();
             $parameters["birthDate"]=$pet->GetBirthDate();
             $parameters["race"]=$pet->GetRace();
             $parameters["size"]=$pet->GetSize();
-            $parameters["vacPlan"]=$pet->GetVacPlan();
-            $parameters["video"]=$pet->GetVideo();
             $parameters["observation"]=$pet->GetObservation();
-            $parameters["petType"]=$pet->GetType();
-            
+            $parameters["idType"]=$pet->GetType()->GetId();
+            $parameters["idOwner"] = $pet->GetOwnerId();
+            $parameters["vacPlan"] = $pet->GetVacPlan();
+
             $this->connection = Connection::GetInstance();
 
-            $lastId = $this->connection->ExecuteNonQuery($query, $parameters,true);
+            $lastId = $this->connection->ExecuteNonQuery($query, $parameters,true,false);
 
             return $lastId;
             
@@ -39,21 +40,24 @@
 
             $query = "SELECT * FROM ".$this->tableName;
 
+            $this->connection = Connection::GetInstance();
             $resultSet = $this->connection->Execute($query);
 
             foreach ($resultSet as $row)
                 {                
+                    $petType = new PetType();
+                    $petType->SetId($row["idType"]);
                     $pet = new Pet();
-                    $pet->SetId($row["petId"]);
+                    $pet->SetId($row["id"]);
                     $pet->SetActive($row["active"]);
                     $pet->SetImg($row["img"]);
                     $pet->SetBirthDate($row["birthDate"]);
-                    $pet->SetRace([$row["race"]]);
-                    $pet->SetSize(["size"]);
-                    $pet->SetVacPlan(["vacPlan"]);
-                    $pet->SetVideo(["video"]);
-                    $pet->SetObservation(["observation"]);
-                    // setear tipo, hacer modelo Type
+                    $pet->SetRace($row["race"]);
+                    $pet->SetSize($row["size"]);
+                    $pet->SetVacPlan($row["vacPlan"]);
+                    $pet->SetVideo($row["video"]);
+                    $pet->SetObservation($row["observation"]);
+                    $pet->SetType($petType);
 
                     array_push($petList, $pet);
                 }
@@ -62,47 +66,56 @@
         }
         public function GetById($id){
 
-            $query = "SELECT * FROM".$this->tableName."WHERE ID = :id";
+            $query = "SELECT * FROM ".$this->tableName." WHERE ID = :id AND active = true";
 
             $parameters["id"] = $id;
-            $row = $this->connection->Execute($query, $parameters);
 
-            $pet = new Pet();
+            $this->connection = Connection::GetInstance();
+            $resultSet = $this->connection->Execute($query, $parameters);
+
+            foreach ($resultSet as $row){
+                $petType = new PetType();
+                    $petType->SetId($row["idType"]);
+                $pet = new Pet();
                     $pet->SetId($row["id"]);
                     $pet->SetActive($row["active"]);
                     $pet->SetImg($row["img"]);
                     $pet->SetBirthDate($row["birthDate"]);
-                    $pet->SetRace([$row["race"]]);
-                    $pet->SetSize(["size"]);
-                    $pet->SetVacPlan(["vacPlan"]);
-                    $pet->SetVideo(["video"]);
-                    $pet->SetObservation(["observation"]);
-                    // setear tipo, hacer modelo Type
-
+                    $pet->SetRace($row["race"]);
+                    $pet->SetSize($row["size"]);
+                    $pet->SetVacPlan($row["vacPlan"]);
+                    // $pet->SetVideo($row["video"]);
+                    $pet->SetObservation($row["observation"]);
+                    $pet->SetType($petType);
+            }
                     return $pet;
         }
 
         public function GetByOwnerId($oId){
 
             $petList = array();
-            $query = "SELECT * FROM".$this->tableName."WHERE ownerId = :id";
+            $query = "SELECT * FROM ".$this->tableName." WHERE idOwner = :id AND active = true";
 
             $parameters["id"] = $oId;
+
+            $this->connection = Connection::GetInstance();
             $resultSet = $this->connection->Execute($query, $parameters);
 
             foreach ($resultSet as $row)
                 {                
+                    $petType = new PetType();
+                    $petType->SetId($row["idType"]);
                     $pet = new Pet();
-                    $pet->SetId($row["petId"]);
+                    $pet->SetId($row["id"]);
                     $pet->SetActive($row["active"]);
                     $pet->SetImg($row["img"]);
                     $pet->SetBirthDate($row["birthDate"]);
-                    $pet->SetRace([$row["race"]]);
-                    $pet->SetSize(["size"]);
-                    $pet->SetVacPlan(["vacPlan"]);
-                    $pet->SetVideo(["video"]);
-                    $pet->SetObservation(["observation"]);
-                    // setear tipo, hacer modelo Type
+                    $pet->SetType($petType);
+                    $pet->SetRace($row["race"]);
+                    $pet->SetSize($row["size"]);
+                    $pet->SetVacPlan($row["vacPlan"]);
+                    $pet->SetVideo($row["idType"]);
+                    $pet->SetObservation($row["observation"]);
 
                     array_push($petList, $pet);
                 }

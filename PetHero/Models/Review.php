@@ -7,8 +7,8 @@ class Review{
     private $id;
     private $owner;
     private $keeper;
-    private $strDescription;
-    private $intReputation;
+    private $Description;
+    private $Reputation;
 
     public function SetId($id){
         $this->id = $id;
@@ -20,16 +20,16 @@ class Review{
         $this->keeper = $keeper;
     }
     public function SetDescription($desc){
-        $this->strDescription = $desc;
+        $this->Description = $desc;
     }
     public function SetReputation($rep){
-        $this->intReputation = $rep;
+        $this->Reputation = $rep;
     }
 
     public function GetId(){return $this->id;}
     public function GetOwner(){return $this->owner;}
     public function GetKeeper(){return $this->keeper;}
-    public function GetDescription(){return $this->strDescription;}
-    public function GetReputation(){return $this->intReputation;}
+    public function GetDescription(){return $this->Description;}
+    public function GetReputation(){return $this->Reputation;}
 }
 ?>
