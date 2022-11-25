@@ -40,7 +40,7 @@
         public function GetAll(){
             $userList = array();
 
-            $query = "SELECT * FROM ".$this->tableName;
+            $query = "SELECT * FROM ".$this->tableName. " WHERE active = 1";
 
             $this->connection = Connection::GetInstance();
             $resultSet = $this->connection->Execute($query);
@@ -89,7 +89,7 @@
             
         }
         public function GetByKeeperId($id){
-            $query = "SELECT * FROM ".$this->tableName." WHERE idKeeper = :idKeeper";
+            $query = "SELECT * FROM ".$this->tableName." WHERE idKeeper = :idKeeper AND active = 1";
 
             $parameters["idKeeper"] = intval($id);
 
@@ -115,7 +115,7 @@
             return $user;
         }
         public function GetByOwnerId($id){
-            $query = "SELECT * FROM ".$this->tableName." WHERE idOwner = :idOwner";
+            $query = "SELECT * FROM ".$this->tableName." WHERE idOwner = :idOwner AND active = 1";
 
             $parameters["idOwner"] = intval($id);
 
@@ -141,7 +141,7 @@
             return $user;
         }
         public function GetById($id){
-            $query = "SELECT * FROM ".$this->tableName." WHERE id = :id";
+            $query = "SELECT * FROM ".$this->tableName." WHERE id = :id AND active = 1";
 
             $parameters["id"] = intval($id);
 

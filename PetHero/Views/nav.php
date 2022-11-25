@@ -10,7 +10,7 @@
           </li>';}?>
           <?php if(isset($_SESSION["loggedUser"]) & isset($_SESSION["idKeeper"])){ echo '
           <li class="nav-item">
-               <a class="nav-link" href="'. FRONT_ROOT .'Booking/History">Reservas</a>
+               <a class="nav-link" href="'. FRONT_ROOT .'Booking/HistoryKeeper">Reservas</a>
           </li>';}?>
           <?php if(isset($_SESSION["loggedUser"]) & !isset($_SESSION["idKeeper"])){ echo '
           <li class="nav-item">
@@ -43,7 +43,10 @@
                <a class="nav-link" href="'.FRONT_ROOT . 'Pet/ShowListView">Listar Mascotas</a>
           </li>
           <li class="nav-item">
-               <a class="nav-link" href="' .FRONT_ROOT .'Keeper/ShowFilterList">Lista de cuidadores</a>
+               <a class="nav-link" href="' .FRONT_ROOT .'Booking/GetNotReviewed">Calificar cuidador</a>
+          </li>
+          <li class="nav-item">
+               <a class="nav-link" href="' .FRONT_ROOT .'Keeper/ShowFilterList">Buscar cuidadores</a>
           </li>
      </ul>
 </nav>';

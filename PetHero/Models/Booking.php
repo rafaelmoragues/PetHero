@@ -10,6 +10,7 @@ class Booking {
     private $EndDate;
     private $IdPet;
     private $Confirmed;
+    private $idReview;
 
     public function SetId($id){
         $this->Id = $id;
@@ -39,6 +40,9 @@ class Booking {
     public function SetConfirmed($confirmed){
         $this->Confirmed = $confirmed;
     }
+    public function SetIdReview($idReview){
+        $this->idReview = $idReview;
+    }
     public function GetId(){return $this->Id;}
     public function GetIdOwner(){return $this->IdOwner;}
     public function GetIdKeeper(){return $this->IdKeeper;}
@@ -48,6 +52,7 @@ class Booking {
     public function GetEndDate(){return $this->EndDate;}
     public function GetIdPet(){return $this->IdPet;}
     public function GetConfirmed(){return $this->Confirmed;}
+    public function GetIdReview(){return $this->idReview;}
 
 }
 ?>

@@ -50,6 +50,7 @@
                     $booking->SetEndDate($row["endDate"]);
                     $booking->SetIdPet($row["idPet"]);
                     $booking->SetConfirmed($row["confirmed"]);
+                    $booking->SetIdReview($row["idReview"]);
 
                     array_push($bookingList, $booking);
                 }
@@ -77,6 +78,7 @@
                     $booking->SetEndDate($row["endDate"]);
                     $booking->SetIdPet($row["idPet"]);
                     $booking->SetConfirmed($row["confirmed"]);
+                    $booking->SetIdReview($row["idReview"]);
                 }
 
             return $booking;
@@ -86,7 +88,7 @@
 
             $oldBooking = $this->GetById($booking->GetId());
             
-            $query = "UPDATE ".$this->tableName." SET IdOwner=:IdOwner, IdKeeper=:IdKeeper, Amount=:Amount, StartDate=:StartDate, EndDate=:EndDate, IdPet=:IdPet, Confirmed=:Confirmed WHERE id = :id";
+            $query = "UPDATE ".$this->tableName." SET IdOwner=:IdOwner, IdKeeper=:IdKeeper, Amount=:Amount, StartDate=:StartDate, EndDate=:EndDate, IdPet=:IdPet, Confirmed=:Confirmed, idReview=:idReview WHERE id = :id";
 
             $parameters["IdOwner"] = $booking->GetIdOwner();
             $parameters["IdKeeper"] = $booking->GetIdKeeper();
@@ -96,6 +98,7 @@
             $parameters["IdPet"] = $booking->GetIdPet();
             $parameters["Confirmed"] = $booking->GetConfirmed();
             $parameters["id"] = $oldBooking->GetId();
+            $parameters["idReview"] = $booking->GetIdReview();
 
             $this->connection = Connection::GetInstance();
             $response = $this->connection->ExecuteNonQuery($query, $parameters, true, false);
@@ -149,6 +152,63 @@
                     $booking->SetEndDate($row["endDate"]);
                     $booking->SetIdPet($row["idPet"]);
                     $booking->SetConfirmed($row["confirmed"]);
+                    $booking->SetIdReview($row["idReview"]);
+
+                    array_push($bookingList, $booking);
+                }
+
+            return $bookingList;
+        }
+
+        public function GetAllByOwnerId($idOwner){
+            $query = "SELECT * FROM ".$this->tableName." WHERE idOwner = :id";
+
+            $parameters["id"] = $idOwner;
+
+            $this->connection = Connection::GetInstance();
+            $resultSet = $this->connection->Execute($query, $parameters);
+
+            $bookingList = array();
+            foreach ($resultSet as $row)
+                {
+                    $booking = new Booking();
+                    $booking->SetId($row["id"]);
+                    $booking->SetOwner($row["idOwner"]);
+                    $booking->SetKeeper($row["idKeeper"]);
+                    $booking->SetAmount($row["amount"]);
+                    $booking->SetStartDate($row["startDate"]);
+                    $booking->SetEndDate($row["endDate"]);
+                    $booking->SetIdPet($row["idPet"]);
+                    $booking->SetConfirmed($row["confirmed"]);
+                    $booking->SetIdReview($row["idReview"]);
+
+                    array_push($bookingList, $booking);
+                }
+
+            return $bookingList;
+        }
+
+        public function GetNotReviewed($idOwner){
+            $query = "SELECT * FROM ".$this->tableName." WHERE idOwner = :id AND idReview = 0";
+
+            $parameters["id"] = $idOwner;
+
+            $this->connection = Connection::GetInstance();
+            $resultSet = $this->connection->Execute($query, $parameters);
+
+            $bookingList = array();
+            foreach ($resultSet as $row)
+                {
+                    $booking = new Booking();
+                    $booking->SetId($row["id"]);
+                    $booking->SetOwner($row["idOwner"]);
+                    $booking->SetKeeper($row["idKeeper"]);
+                    $booking->SetAmount($row["amount"]);
+                    $booking->SetStartDate($row["startDate"]);
+                    $booking->SetEndDate($row["endDate"]);
+                    $booking->SetIdPet($row["idPet"]);
+                    $booking->SetConfirmed($row["confirmed"]);
+                    $booking->SetIdReview($row["idReview"]);
                     array_push($bookingList, $booking);
                 }
 

@@ -15,8 +15,7 @@ use Models\Owner;
 
         public function Add(Review $review){
 
-            $query = "INSERT INTO ".$this->tableName." ( idOwner, idKeeper, description,reputation) 
-            VALUES (:idOwner,:idKeeper,:description,reputation);";
+            $query = "INSERT INTO ".$this->tableName." ( idOwner, idKeeper, description,reputation) VALUES (:idOwner,:idKeeper,:description,:reputation);";
 
             $parameters["idOwner"] = $review->GetOwner()->GetId();
             $parameters["idKeeper"] = $review->GetKeeper()->GetId();
@@ -31,7 +30,7 @@ use Models\Owner;
         }
 
         public function GetByIdKeeper($id){
-            $query = "SELECT * FROM".$this->tableName."WHERE ID = :id";
+            $query = "SELECT * FROM ".$this->tableName." WHERE ID = :id";
 
             $parameters["id"] = $id;
             $row = $this->connection->Execute($query, $parameters);

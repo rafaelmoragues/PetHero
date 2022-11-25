@@ -9,7 +9,7 @@ require_once(VIEWS_PATH . "validate-session.php");
                <form action="<?php echo FRONT_ROOT ?>Booking/NewBooking" method="post" enctype="multipart/form-data" class="bg-light-alpha p-5">
                <table class="table bg-light-alpha">
                     <thead>
-                         <th>Price</th>
+                         <th>Precio por dia</th>
                          <th>Apellido</th>
                          <th>Nombre</th>
                     </thead>
@@ -20,7 +20,7 @@ require_once(VIEWS_PATH . "validate-session.php");
                                    ?>
                                         <tr>
                                              
-                                             <td><?php echo $keeperVM->GetPrice() ?></td>
+                                             <td><?php echo $keeperVM->GetPrice()  ?></td>
                                              <td><?php echo $keeperVM->GetLastName() ?></td>
                                              <td><?php echo $keeperVM->GetName() ?></td>
                                              <td><input type="hidden" name="idKeeper" value="<?php echo $keeperVM->GetIdKeeper() ?>">

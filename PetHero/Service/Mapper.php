@@ -27,17 +27,19 @@ class Mapper{
         return $keeperViewModel;
     }
 
-    public function MapBooking($booking, $user, $pet){
+    public function MapBooking($booking, $user, $pet, $reputation = 0){
 
         $bookingViewModel = new BookingViewModel();
 
         // seteo bookingViewModel desde un booking, user y pet
         $bookingViewModel->SetIdBooking($booking->GetId());
+        $bookingViewModel->SetIdKeeper($booking->GetIdKeeper());
         $bookingViewModel->SetOwnerName($user->GetName());
         $bookingViewModel->SetAmount($booking->GetAmount());
         $bookingViewModel->SetStartDate($booking->GetStartDate());
         $bookingViewModel->SetEndDate($booking->GetEndDate());
         $bookingViewModel->SetPetImg($pet->GetImg());
+        $bookingViewModel->SetReputation($reputation);
         
         return $bookingViewModel;
     }
